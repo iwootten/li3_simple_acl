@@ -1,7 +1,7 @@
 <?php
 
 namespace li3_simple_acl\extensions\security;
-
+use app\models\Roles;
 /**
  * `Lightweight ACL model`
  * Burden is on defining the rules where the `resources` are located:
@@ -58,9 +58,17 @@ class Acl {
             if ('any' == $rule) {
                 return true;
             }
+
             // match roles to rules
-            if (!empty($user['role']) && $user['role'] == $rule) {
-                return true;
+            if (!empty($user['role_id'])) {
+
+                $ruleRole = Roles::find('first', array(
+                    'conditions' => array('slug' => $rule)
+                ));
+
+                if (!empty($ruleRole) && $user['role_id'] == $ruleRole->role_id){
+                    return true;
+                }
             }
             /**
              * logged in `user`
