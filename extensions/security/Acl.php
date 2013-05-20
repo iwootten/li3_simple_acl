@@ -66,7 +66,7 @@ class Acl {
                     'conditions' => array('slug' => $rule)
                 ));
 
-                if (!empty($ruleRole) && $user['role_id'] == $ruleRole->role_id){
+                if (!empty($ruleRole) && $user['role_id'] == $ruleRole->id){
                     return true;
                 }
             }
